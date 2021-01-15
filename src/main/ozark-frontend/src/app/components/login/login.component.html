@@ -1,0 +1,37 @@
+<p>login works!</p>
+<ul>
+    <li *ngFor="let user of users">{{user.firstName}} {{user.lastName}}</li>
+</ul>
+
+<form #loginForm = "ngForm" (ngSubmit)="loginSubmit()">
+
+    <div class="field-wrap">
+      <label>
+        Email Address<span class="req">*</span>
+      </label>
+      <input type="email"
+             required="required"
+             name = "username"
+             [(ngModel)] = "username" >
+    </div>
+
+    <div class="field-wrap">
+      <label>
+        Password<span class="req">*</span>
+      </label>
+      <input type="password"
+             name="password"
+             id="password"
+             name = "ngModel"
+             required
+             [(ngModel)] = "password">
+    </div>
+    <!--<button class="button button-block" routerLink="/userradio">Log In</button>-->
+    <button class = "button button-block" type="submit" [disabled]="!loginForm.valid">Login</button>
+    <p *ngIf = "errorType == 'Not Found'">
+        You don't have an account registered with this email
+    </p>
+    <p *ngIf = "errorType == 'Unauthorized'">
+        Your password is incorrect
+    </p>
+  </form>

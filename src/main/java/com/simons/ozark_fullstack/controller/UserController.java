@@ -38,18 +38,20 @@ public class UserController {
         JsonObjectBuilder builder = Json.createObjectBuilder();
         JsonObject json;
         String authenticated = userService.authenticate(username, password);
-        if(authenticated.equalsIgnoreCase("User not authorized")){
+        System.out.println(authenticated);
+        if(authenticated.equalsIgnoreCase("User is authenticated")){
+            builder.add("text", authenticated);
+            json = builder.build();
+            return new ResponseEntity<>(json.toString(), HttpStatus.OK);
+        }else if(authenticated.equalsIgnoreCase("User not found in the system")) {
+            builder.add("text", authenticated);
+            json = builder.build();
+            return new ResponseEntity<>(json.toString(), HttpStatus.NOT_FOUND);
+        }else{
             builder.add("text",authenticated);
             json = builder.build();
             return new ResponseEntity<>(json.toString(), HttpStatus.UNAUTHORIZED);
-        }else if(authenticated.equalsIgnoreCase("User not found in the system")){
-            builder.add("text",authenticated);
-            json = builder.build();
-            return new ResponseEntity<>(json.toString(), HttpStatus.NOT_FOUND);
         }
-        builder.add("text",authenticated);
-        json = builder.build();
-        return new ResponseEntity<>(json.toString(), HttpStatus.OK);
     }
 
 }
