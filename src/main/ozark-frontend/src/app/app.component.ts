@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ozark-frontend';
+  refresh(): void{
+    window.location.href = 'http://localhost:8080/';
+    this.getUser();
+  }
+  getUser(): void{
+    console.log(JSON.parse(localStorage.getItem("authToken")).firstName),
+    console.log(JSON.parse(localStorage.getItem("authToken")).lastName)
+  }
 }

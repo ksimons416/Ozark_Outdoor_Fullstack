@@ -13,6 +13,7 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.http.MediaType;
 
 @Slf4j
 @RestController
@@ -26,6 +27,10 @@ public class UserController {
     public ResponseEntity<UserDTO> findUserByUsername(@PathVariable("username") String username){
         UserDTO userDetails = userService.findUserByUsername(username);
         return ResponseEntity.ok(userDetails);
+    }
+    @PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserDTO handleLogin(@RequestBody UserDTO userDTO) {
+        return this.userService.findUserByUserNameAndPassWord(userDTO.getUsername(), userDTO.getPassword());
     }
     @GetMapping("/findAllUsers")
     public ResponseEntity<List<UserDTO>> findAllUsers(){

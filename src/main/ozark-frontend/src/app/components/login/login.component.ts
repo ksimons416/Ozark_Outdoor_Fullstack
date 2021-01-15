@@ -32,10 +32,20 @@ export class LoginComponent implements OnInit {
     })
   }
   loginSubmit() {
+    this.authenticate();
+  }
+
+  authenticate() {
     this.authService.authenticate(this.username, this.password).subscribe(
       data => {
         this.serviceResponse = data;
         if(Object.values(this.serviceResponse)[0] == "User is authenticated"){
+          this.authService.generateLoginCookie(this.username, this.password,
+            (err) => {
+              console.log(err);
+              console.log('not logged in');
+            });
+            console.log(this.username);
           this.router.navigate(["/homepage"]);
           console.log(Object.values(this.serviceResponse));
           console.log(data);
@@ -49,7 +59,7 @@ export class LoginComponent implements OnInit {
             this.errorType = "Unauthorized"
           }
           console.error("invalid login "+JSON.stringify(error));
-      });
+        });
       }
 
 }

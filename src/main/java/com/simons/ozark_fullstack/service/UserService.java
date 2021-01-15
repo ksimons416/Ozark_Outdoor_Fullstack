@@ -21,6 +21,9 @@ public class UserService {
     public List<UserDTO> findAllUsers(){
         return userRepository.findAll();
     }
+    public UserDTO findUserByUserNameAndPassWord(String username, String password){
+        return userRepository.findUserDTOByUsernameAndPassword(username, password);
+    }
 
 
     public String authenticate(Optional<String> username, String password) {

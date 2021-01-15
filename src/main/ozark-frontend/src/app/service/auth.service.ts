@@ -21,7 +21,9 @@ export class AuthService{
   httpOptions = HttpOptions
   error: HttpErrorResponse;
   serviceResponse: ServiceResponse<HttpErrorResponse>;
-
+  private authToken: any;
+  username: string;
+  password: string;
 
   constructor(private http: HttpClient) {
 
@@ -33,5 +35,34 @@ export class AuthService{
           this.serviceResponse.responseCode = this.error.status;
           return Observable.empty();
     });
+  }
+  static isLoggedIn(): boolean {
+    return localStorage.getItem('authToken') != null;
+  }
+
+  static getLoggedInUser() {
+    let usersJson = localStorage.getItem('authToken');
+    if (usersJson === null) return null;
+    let users = JSON.parse(usersJson);
+    return users;
+  }
+
+  generateLoginCookie(username: string, password: string, fail){
+    return this.http.post<any>('http://localhost:4200/user/login',
+      JSON.stringify({username: username, password: password}),
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .toPromise()
+      .then((resp) => {
+        localStorage.setItem('authToken', JSON.stringify(resp));
+        console.log(resp)
+      },
+      (err) => {
+        fail(err);
+      });
+  
   }
 }
