@@ -1,2 +1,2 @@
-<p>homepage works!</p>
-<p>Welcome {{loggedInFirstname}}</p>
+<app-nav></app-nav>
+<p *ngIf="loggedInFirstname != null">Welcome {{loggedInFirstname}}</p>

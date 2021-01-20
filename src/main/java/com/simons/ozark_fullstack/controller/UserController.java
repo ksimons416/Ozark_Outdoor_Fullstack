@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.json.Json;
@@ -30,6 +31,7 @@ public class UserController {
     }
     @PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO handleLogin(@RequestBody UserDTO userDTO) {
+        System.out.println("login method triggered");
         return this.userService.findUserByUserNameAndPassWord(userDTO.getUsername(), userDTO.getPassword());
     }
     @GetMapping("/findAllUsers")
@@ -40,6 +42,7 @@ public class UserController {
 
     @GetMapping("/authenticate/{username}/{password}")
     public ResponseEntity authenticate(@PathVariable("username") Optional<String> username, @PathVariable("password") String password){
+        System.out.println("authentication method triggered");
         JsonObjectBuilder builder = Json.createObjectBuilder();
         JsonObject json;
         String authenticated = userService.authenticate(username, password);

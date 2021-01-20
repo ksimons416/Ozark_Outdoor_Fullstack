@@ -10,13 +10,17 @@ import { HomepageComponent } from './components/homepage/homepage.component'
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/empty';
-import 'rxjs/add/operator/retry'; 
+import 'rxjs/add/operator/retry';
+import { NavComponent } from './nav/nav.component';
+import { SignupComponent } from './components/signup/signup.component'; 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomepageComponent
+    HomepageComponent,
+    NavComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

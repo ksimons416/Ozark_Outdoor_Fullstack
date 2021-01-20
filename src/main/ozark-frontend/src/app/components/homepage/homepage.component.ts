@@ -3,6 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/model/User';
 import { AuthService } from 'src/app/service/auth.service';
 import { UserService } from 'src/app/service/user-service';
+import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
+import {RouterEvent, NavigationEnd} from '@angular/router'
+import { Observable, BehaviorSubject} from 'rxjs';
+import { ThisReceiver } from '@angular/compiler';
+ 
 
 @Component({
   selector: 'app-homepage',
@@ -10,14 +15,17 @@ import { UserService } from 'src/app/service/user-service';
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
+ 
   user = AuthService.getLoggedInUser();
   loggedInFirstname: string;
-  constructor(private userService: UserService,  private router: Router, private route: ActivatedRoute,
-    private authService: AuthService) { }
+  constructor(private authService: AuthService) { 
+    console.log("initializing")
+  }
 
   ngOnInit(): void {
-    this.loggedInFirstname = this.user.firstName
-  
+    localStorage.getItem('authToken');
+    if(this.user != null){
+      this.loggedInFirstname = this.user.firstName
     }
-
+  }
 }

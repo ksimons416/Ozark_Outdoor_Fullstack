@@ -12,7 +12,6 @@ export class AppComponent {
     this.getUser();
   }
   getUser(): void{
-    console.log(JSON.parse(localStorage.getItem("authToken")).firstName),
-    console.log(JSON.parse(localStorage.getItem("authToken")).lastName)
+    JSON.parse(localStorage.getItem("authToken"));
   }
 }

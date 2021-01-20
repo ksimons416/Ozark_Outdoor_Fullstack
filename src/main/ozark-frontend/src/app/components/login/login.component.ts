@@ -6,7 +6,6 @@ import { AuthService } from 'src/app/service/auth.service';
 import { first } from 'rxjs/operators';
 import {ServiceResponse} from "../../model/service-response";
 import { Router } from '@angular/router';
-import {HttpOptions} from '../../model/http-options'
 
 @Component({
   selector: 'app-login',
@@ -20,17 +19,16 @@ export class LoginComponent implements OnInit {
   password: string;
   user: User;
   serviceResponse: string;
-  httpOptions = HttpOptions;
   errorType: string;
 
 
   constructor(private userService: UserService, private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.userService.getAll().subscribe(users =>{
-      this.users = users;
-    })
+    
   }
+  
+
   loginSubmit() {
     this.authenticate();
   }
@@ -45,10 +43,7 @@ export class LoginComponent implements OnInit {
               console.log(err);
               console.log('not logged in');
             });
-            console.log(this.username);
-          this.router.navigate(["/homepage"]);
-          console.log(Object.values(this.serviceResponse));
-          console.log(data);
+
         }
       },
         error => {

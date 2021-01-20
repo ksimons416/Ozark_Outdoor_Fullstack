@@ -12,7 +12,7 @@ export class AuthGuardService {
     if(localStorage.getItem('authToken')) {
       return true;
     }else{
-    // this.router.navigate(['/user/login'], {queryParams: {returnUrl: state.url}});
+    this.router.navigate(['/login'], {queryParams: {returnUrl: state.url}});
     return false;
     }
   }
