@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,25 +17,30 @@ public class UserService {
     UserRepository userRepository;
 
     public UserDTO findUserByUsername(String email){
-        return userRepository.findByUsername(email);
+        return userRepository.findByUserName(email);
     }
     public List<UserDTO> findAllUsers(){
         return userRepository.findAll();
     }
     public UserDTO findUserByUserNameAndPassWord(String username, String password){
-        return userRepository.findUserDTOByUsernameAndPassword(username, password);
+        return userRepository.findUserDTOByUserNameAndPassword(username, password);
+    }
+
+    public void userSignup(String userName, String firstName, String lastName, String password){
+            userRepository.userSignUp(userName, firstName, lastName, password);
+
     }
 
 
     public String authenticate(Optional<String> username, String password) {
        String isAuthenticated = "";
-        Optional<UserDTO> user = Optional.ofNullable(userRepository.authenticateByUsername(username));
+        Optional<UserDTO> user = Optional.ofNullable(userRepository.authenticateByUserName(username));
         Optional<String> DBusername =
                 Optional.ofNullable(user.stream().findFirst().isPresent()
-                        ? user.stream().findFirst().get().getUsername() : null);
+                        ? user.stream().findFirst().get().getUserName() : null);
         String DBpassword = "";
         if (DBusername.isPresent()) {
-            DBpassword = userRepository.authenticateByUsername(DBusername).getPassword();
+            DBpassword = userRepository.authenticateByUserName(DBusername).getPassword();
             log.info("user exists in system");
             isAuthenticated = "User not authenticated";
             if (DBusername.equals(username) && DBpassword.equals(password)) {

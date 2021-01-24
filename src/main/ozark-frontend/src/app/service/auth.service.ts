@@ -63,7 +63,7 @@ export class AuthService{
 
   generateLoginCookie(username: string, password: string, fail){
     return this.http.post<any>('http://localhost:4200/user/login',
-      JSON.stringify({username: username, password: password}),
+      JSON.stringify({userName: username, password: password}),
       {
         headers: {
           'Content-Type': 'application/json'

@@ -5,10 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity(name ="USERS")
@@ -18,11 +15,12 @@ import javax.persistence.Table;
 public class UserDTO {
 
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "PERSONID")
     Integer personId;
 
     @Column(name = "USERNAME")
-    String username;
+    String userName;
 
     @Column(name = "FIRSTNAME")
     String firstName;
